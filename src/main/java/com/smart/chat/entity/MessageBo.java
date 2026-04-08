@@ -1,8 +1,8 @@
 package com.smart.chat.entity;
 
-import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,12 +11,13 @@ import java.time.LocalDateTime;
 @Data
 public class MessageBo 
 {
+	@Id
 	private long msgId;
 	private String senderId;
 	private String receiverId;
 	private String message;
 	private String status;
 	private LocalDateTime timeStamp;
-	
+
 	
 }
