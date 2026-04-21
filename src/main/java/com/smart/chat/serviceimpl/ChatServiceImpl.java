@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smart.chat.common.ResourceNotFoundException;
 import com.smart.chat.entity.MessageBo;
 import com.smart.chat.repositary.ChatRepositary;
 import com.smart.chat.service.ChatService;
@@ -27,8 +28,13 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public List<MessageBo> getMessageByUserId(String user_id) {
+	public List<MessageBo> getMessageByUserId(String user_id) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
+		
+		List<MessageBo> returnBo=chatRepositary.findBysenderId(user_id);
+	
+		if(returnBo==null ||returnBo.isEmpty())
+			 throw new ResourceNotFoundException("Resource Not Found Exception");
 		return chatRepositary.findBysenderId(user_id);
 	}
 

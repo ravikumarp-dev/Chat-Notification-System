@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.smart.chat.common.MethodInfo;
+import com.smart.chat.common.ResourceNotFoundException;
 import com.smart.chat.entity.MessageBo;
 import com.smart.chat.service.ChatService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/chat")
@@ -30,7 +32,7 @@ public class ChatController
 	
 	@PostMapping("/saveUserMessage")
 	@MethodInfo(author = "Ravi", author_desc = " save API for chat message ", crt_date = "08/04/2026")
-	public ResponseEntity<MessageBo>  saveUserMessage(@RequestBody MessageBo bo,HttpServletRequest req,HttpServletResponse res )
+	public ResponseEntity<MessageBo>  saveUserMessage(@Valid @RequestBody MessageBo bo,HttpServletRequest req,HttpServletResponse res )
 	{ 
 		MessageBo saved=chatService.saveUserMessage(bo);		
 		return ResponseEntity.ok(saved);
@@ -46,7 +48,7 @@ public class ChatController
 	
 	
 	@GetMapping("/getMessageByUserId/{user_id}")
-	public List<MessageBo> getMessageByUserId(@PathVariable String user_id)
+	public List<MessageBo> getMessageByUserId(@PathVariable String user_id) throws ResourceNotFoundException
 	{
 		return chatService.getMessageByUserId(user_id);		
 	}
